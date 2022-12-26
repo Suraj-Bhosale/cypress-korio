@@ -1,0 +1,540 @@
+1. Object.keys() / Object.values()
+2. use of filter in Arrays and objects.
+3. reduce() for sum of values in array and objects.
+4. replace()
+5. sort() in arrays for string or words is easy
+6. Learn call(), apply() and bind().
+
+//Find Value of any ket/ value
+const OBJECT = {
+    'key1': 'value1',
+    'key2': 'value2',
+    'key3': 'value3',
+    'key4': 'value4'
+};
+
+const value = 'value2';
+
+const key = Object.keys(OBJECT)[Object.values(OBJECT).indexOf(value)];
+
+console.log(key); // = key2
+
+--------------------------------------------------------------------------------------------------------------
+//Object.entries
+
+let obj1 = {
+    a: "alpha",
+    b: "beta"
+};
+
+console.log(Object.entries(obj1))
+//[ [ 'a', 'alpha' ], [ 'b', 'beta' ] ]
+
+================================================
+
+
+//Convert string in char array 
+let str = "I am boss";
+
+const arr = [...str.toLowerCase()]
+
+console.log(arr)
+
+--------------------------------------------------------------------------------------------------------------
+//Longest Word in String
+
+const str = "Built by folks at BigBinary";
+
+
+let solve = (str) =>{
+  let arr = str.split(" ");
+  let max = Number.MIN_VALUE;
+  let word = "";
+  for(let i = 0; i < arr.length; i++){
+      if(arr[i].length > max){
+        max = arr[i].length;
+        word = arr[i];
+      }
+  }
+
+  return word;
+}
+console.log(solve(str))
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+//Print all Unique Words
+
+const s1 = "John likes Icecream";
+const s2 = "Everyone likes Icecream";
+
+const strArr = [...s1, " ", ...s2].join("");
+const result = [...new Set(strArr.split(" "))];
+
+console.log(result)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//String Pangram
+
+const str = "The quick brown fox jumps over a lazy dog";
+let s = str.toLowerCase().split("")
+const result = [...new Set(s)];
+console.log(result.length >= 26)
+
+ or
+
+   const arr = [..."abcdefghijklmnopqrstuvwxyz"];
+  const hash = new Map();
+  arr.forEach((e) => hash.set(e, 0));
+  const strArr = [...str.toLowerCase()];
+  strArr.forEach((e) => {
+    if (hash.has(e)) hash.delete(e);
+  });
+  if (hash.size === 0) return true;
+  else return false;
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Find winning team
+
+function findWinningTeam(teams) {
+  let winningTeam = {
+    name: "",
+    totalPoints: 0,
+  };
+  teams.forEach((team) => {
+    const totalPoints = team.points.reduce(
+      (currentSum, currentValue) => currentSum + currentValue
+    );
+    if (winningTeam.totalPoints < totalPoints) {
+      winningTeam = {
+        name: team.name,
+        totalPoints: totalPoints,
+      };
+    }
+  });
+  return JSON.stringify(winningTeam);
+}
+
+================================================================================================================================
+//Reverse and Match
+
+function reverseAndMatch(word, list) {
+  let arr = [...word];
+  let cont = []
+  for (let i = arr.length-1; i >= 0; i--) {
+    cont.push(arr[i])
+  }
+  let wordRev = cont.join("");
+  let ans = false;
+  list.forEach( (ele) => {
+    if(ele.toLowerCase() == wordRev.toLowerCase()){
+       ans = ele;
+       return ans;
+    }
+ 
+  })
+
+   return ans;
+}
+
+
+================================================================================================================================
+
+//Get Movies
+
+let surveyAnswers = [
+  {
+    name: "Jacqueline",
+    favoriteIndianMovie: "Kumbalangi Nights",
+  },
+  {
+    name: "Dawson",
+    favoriteIndianMovie: "Thappad",
+  },
+  {
+    name: "Jocelyn",
+    favoriteIndianMovie: "Karnan",
+  },
+  {
+    name: "Palmer",
+    favoriteIndianMovie: "Kumbalangi Nights",
+  },
+];
+
+
+
+function getIndianMovies(surveyAnswers) {
+  const result = surveyAnswers.map(a => a.favoriteIndianMovie).sort();
+  const result2 = surveyAnswers.map(ele => ele.favoriteIndianMovie)
+  const unique = [...new Set(result)]
+  return unique;
+}
+
+console.log(getIndianMovies(surveyAnswers));
+
+
+==============================================================================================
+
+// Lottery Ticket for
+
+const ticketLot = [
+  {
+    id: 8421,
+    name: 'Kendall Gordon',
+  },
+  {
+    id: 1356,
+    name: 'Chase Walton',
+  },
+  {
+    id: 2599,
+    name: 'Nadia Ali',
+  }
+];
+
+function chooseWinner(ticketLot) {
+  let winner = [];
+  let arr = [113,251, 376,401];
+  
+  for(let no of arr){
+       let res = ticketLot.filter( (ele2) => ele2.id % no === 0)
+       if(res && res.length == 1){
+           return res[0].id;
+      }
+    }
+}
+console.log(chooseWinner(ticketLot));
+
+
+==============================================================================================
+
+// Sum in objects
+
+const expenses = [
+  {
+    spentOn: "Movie",
+    amount: 500
+  },
+  {
+    spentOn: "Tram",
+    amount: 200
+  },
+  {
+    spentOn: "Lunch",
+    amount: 290
+  },
+  {
+    spentOn: "Groceries",
+    amount: 3290
+  },
+  {
+    spentOn: "Fashion",
+    amount: 8290
+  }
+];
+
+const totalExpenses = (expenses) => {
+  let result = expenses.reduce( (total, {amount}) =>{
+    return amount + total;
+  },0)
+  
+  // let sum = 0;
+  // expenses.forEach( (ele) =>{
+  //   sum += ele.amount;
+  // })
+  return result;
+}
+
+
+
+==============================================================================================
+//vaccinated user details
+
+const users = [
+  {
+    name: "Sam",
+    vaccinated: true,
+  },
+]
+
+const vaccinatedUsers = (users) => {
+  const arr = [];
+  
+  users.forEach( (ele) => {
+    if(ele.vaccinated == true){
+      arr.push(ele.name);
+    }
+  })
+  
+  // let res = users.filter( user => user.vaccinated).map(user => user.name);
+
+  return arr.join( ', ');
+}
+
+
+==============================================================================================
+
+//List all given cars in region
+
+const region = "USA";
+const manufacturers = [
+  {
+    name: "Ford",
+    region: "USA",
+    cars: ["Fusion", "EcoSport", "Explorer", "Ranger", "Edge", "Escape"]
+  },
+  {
+    name: "Suzuki",
+    region: "Asia",
+    cars: ["Carry Truck", "Carry Dump Truck", "Jimny", "Landy"]
+  },
+  {
+    name: "PSA Peugeot-Citroën",
+    region: "Europe",
+    cars: ["Peugeot 504", "Citroën GS", "Citroën CX", "Simca 1307-08", "Simca Horizon"]
+  },
+  {
+    name: "Fiat-Chrysler",
+    region: "Europe",
+    cars: ["Alfa Romeo", "Pacifica", "Fiat 500X", "Fiat Egea"]
+  },
+]
+
+//I was facing problem with map, it was showing results in double arrays
+
+function getCarsByRegion(manufacturers, region){
+  const manufacturersOfRegion = manufacturers.filter((manufacturer) => {
+    return manufacturer.region === region;
+  });
+  const carsOfRegion = manufacturersOfRegion.reduce((carsOfRegion, manufacturer) => {
+    carsOfRegion = carsOfRegion.concat(manufacturer.cars);
+    return carsOfRegion;
+  }, []);
+  return carsOfRegion;
+}
+
+
+==============================================================================================
+// Check equality of
+const arr1 = [1, 2, 3, 4];
+const arr2 = [1, 2, 3, 4];
+
+const compareArray = (arr1, arr2) => {
+  if (arr1.length === 0 || arr2.length === 0) return false;
+  if (arr1.length !== arr2.length) return false;
+  const compared = arr1.map((el, idx) => arr2[idx] === el);
+  return !compared.includes(false);
+};
+
+
+
+==============================================================================================
+
+//Frequency of the character in the string
+
+const str = "abcddefg";
+
+const mostCommonCharacter = (str) => {
+  let map = new Map();
+  let arr = str.toLowerCase().split("");
+  for (let i = 0; i < arr.length; i++) {
+    if(map.has(arr[i])){
+       let freq = map.get(arr[i]);
+       map.set(arr[i], freq+1);
+    }else{
+      map.set(arr[i], 1);
+    }
+  }
+
+  return [...map].reduce((a, e) => (e[1] > a[1] ? e : a))[0];
+};
+
+
+console.log(mostCommonCharacter(str))
+
+
+
+================================================================================================================================
+
+//Sort user list by number of clicks
+
+const users = [
+  {
+    user: "Eric",
+    clicks: 430,
+  },
+  {
+    user: "Sam",
+    clicks: 220,
+  },
+  {
+    user: "John",
+    clicks: 830,
+  },
+  {
+    user: "Amy",
+    clicks: 778,
+  }
+];
+
+
+function sortUsers(users){
+  return users.sort((userA, userB) => {
+    if (userA.clicks < userB.clicks) {
+      return -1;
+    }
+    if (userA.clicks > userB.clicks) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+
+//If wants to print only few properties then use Map
+function sum(users){
+  return users.sort((userA, userB) => {
+    if (userA.clicks < userB.clicks) {
+      return -1;
+    }
+    if (userA.clicks > userB.clicks) {
+      return 1;
+    }
+    return 0;
+  }).map( b => b.user);
+
+
+
+
+  ================================================================
+
+  // Dublicate / unique elements
+
+
+  const str = "abcddefbga";
+
+const mostCommonCharacter = (str) => {
+  let map = new Map();
+  let arr = str.toLowerCase().split("");
+  for (let i = 0; i < arr.length; i++) {
+    if(map.has(arr[i])){
+       let freq = map.get(arr[i]);
+       map.set(arr[i], freq+1);
+    }else{
+      map.set(arr[i], 1);
+    }
+  }
+  return [...map].filter( a => a[1] >= 2).map(b => b[0]); // Dublicate
+  //return [...map].filter( a => a[1] == 1).map(b => b[0]); //Unique
+};
+
+
+console.log(mostCommonCharacter(str))
+
+================================================================
+
+Merge 2 objects into one
+
+let obj1 = {
+    a: "alpha",
+    b: "beta"
+};
+
+let obj2 = {
+    c: "ceta",
+    d: "delta"
+}
+
+let obj3 ={}
+    for(key in obj1){
+       obj3[key] = obj1[key];
+    }
+
+    for(key in obj2){
+        obj3[key] = obj2[key];
+     }
+
+     console.log(obj3)
+
+     or
+
+     let obj3{
+       ...obj1,
+       ...obj2
+     }
+
+
+============================================================
+
+let students = [
+  {
+    name: 'Vaishnavi',
+    batch: 8,
+    marks: {
+      science: 80,
+      social: 70,
+      hindi: 80,
+      maths: 100,
+      english: 90,
+    }
+  }, {
+    name: 'Abhishek',
+    batch: 10,
+    marks: {
+      science: 75,
+      social: 75,
+      hindi: 62,
+      maths: 81,
+      english: 52,
+    }
+  }, {
+    name: 'Pappu',
+    batch: 10,
+    marks: {
+      science: 70,
+      social: 72,
+      hindi: 75,
+      maths: 95,
+      english: 82,
+    }
+  }, {
+    name: 'Ram',
+    batch: 7,
+    marks: {
+      science: 35,
+      social: 24,
+      hindi: 22,
+      maths: 95,
+      english: 67,
+    }
+  }, {
+    name: 'Shyam',
+    batch: 9,
+    marks: {
+      science: 45,
+      social: 87,
+      hindi: 65,
+      maths: 78,
+      english: 99,
+    }
+  }
+]
+
+
+let studentsUpdatedDetails = students.map(student => 
+  ({
+    name: student.name,
+    batch: student.batch,
+    averageMarks: Object.values(student.marks).reduce((total, marks) => total + marks) / 5
+  })
+).filter(student => student.averageMarks > 75)
+
+console.log(studentsUpdatedDetails)
